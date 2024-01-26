@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import styles from "./auth.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRegisterUserMutation } from "../../services/authApi";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 interface IFormInput {
   name: string;
@@ -34,9 +37,24 @@ export default function Register() {
     formState: { errors },
   } = useForm<IFormInput>({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: IFormInput) => {
-    console.log(data);
+  const [registerUser, { data, isSuccess, isError, error }] =
+    useRegisterUserMutation();
+  const navigate = useNavigate();
+
+  const onSubmit = async (formData: IFormInput) => {
+    if (formData) {
+      await registerUser(formData);
+    } else {
+      console.log("Error occured while registering user");
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("User registered successfully...");
+      navigate("/login");
+    }
+  }, [isSuccess]);
 
   return (
     <div className={styles.register}>

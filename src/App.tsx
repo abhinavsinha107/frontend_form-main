@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setUser(user));
-  }, []);
+  });
 
   return (
     <BrowserRouter>

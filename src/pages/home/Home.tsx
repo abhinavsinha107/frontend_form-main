@@ -1,9 +1,11 @@
-import React from "react";
+import Header from "../../layouts/header/Header";
+import Footer from "../../layouts/footer/Footer";
 
 const Home = () => {
   return (
     <>
-      <h1>This is home page</h1>
+      <Header />
+      <Footer />
     </>
   );
 };
